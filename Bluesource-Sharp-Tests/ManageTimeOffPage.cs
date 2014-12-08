@@ -4,6 +4,7 @@ using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace BluesourceSharpTests
 {
@@ -22,15 +23,21 @@ namespace BluesourceSharpTests
 
 		public ManageTimeOffPage SetVacationInfo( DateTime start, DateTime end, string type ) {
 			SyncElement (By.Name ("new[vacation][start_date]"));
-			//start_date.SendKeys (start.ToString ("yyyyMMdd"));
-			//end_date.SendKeys (end.ToString ("yyyyMMdd"));
+			string start_s = start.ToString ("yyyy-MM-dd", CultureInfo.InvariantCulture);
+			string end_s = end.ToString ("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
 			start_date.Clear ();
-			start_date.SendKeys ("2014-12-26");
+			start_date.SendKeys (start_s);
 			end_date.Clear ();
-			end_date.SendKeys ("2014-12-27");
+			end_date.SendKeys (end_s);
 			vacation_type.FindElement (By.XPath ("//option[contains(., \"" + type + "\")]")).Click();
 			start_date.Submit ();
 			return new ManageTimeOffPage (driver);
+		}
+
+		public IWebElement GetVacationInfo( DateTime start ) {
+			string start_s = start.ToString ("yyyy-MM-dd", CultureInfo.InvariantCulture);
+			return driver.FindElement (By.XPath ("input[@value = '" + start_s + "']"));
 		}
 
 		public IReadOnlyCollection<IWebElement> GetAllTimeOff() {
