@@ -15,3 +15,5 @@ C:\Users\brian.becker\Documents\Projects\Bluesource-Sharp-Tests\Bluesource-Sharp
 C:\Users\brian.becker\Documents\Projects\Bluesource-Sharp-Tests\Bluesource-Sharp-Tests\obj\Debug\Bluesource-Sharp-Tests.csprojResolveAssemblyReference.cache
 C:\Users\brian.becker\Documents\Projects\Bluesource-Sharp-Tests\Bluesource-Sharp-Tests\obj\Debug\Bluesource-Sharp-Tests.dll
 C:\Users\brian.becker\Documents\Projects\Bluesource-Sharp-Tests\Bluesource-Sharp-Tests\obj\Debug\Bluesource-Sharp-Tests.pdb
+C:\Users\brian.becker\Documents\Projects\Bluesource-Sharp-Tests\Bluesource-Sharp-Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\brian.becker\Documents\Projects\Bluesource-Sharp-Tests\Bluesource-Sharp-Tests\bin\Debug\Newtonsoft.Json.xml

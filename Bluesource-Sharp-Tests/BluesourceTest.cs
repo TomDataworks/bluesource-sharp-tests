@@ -1,9 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.PageObjects; // *
+using OpenQA.Selenium.Support.PageObjects;
 using NUnit.Framework;
 using System;
 using System.Globalization;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace BluesourceSharpTests
 {
@@ -87,35 +89,13 @@ namespace BluesourceSharpTests
 		}*/
 
 		[Test ()]
-		public void TestTimeOffTwoDays()
+		public void TestTimeOff()
 		{
-			LoginPage page = new LoginPage (driver);
-			EmployeesPage empl = page.DoLogin ("company.admin", "anything");
-			NavigationBar nav = new NavigationBar (driver);
-			empl.EnterInSearch ("Kazirick Revele");
-			EmployeeDataPage data = empl.SelectFirstMatchingEmployee ();
-			ManageTimeOffPage timeOff = data.GotoManageTimeOff ();
-			timeOff = timeOff.SetVacationInfo (
-				DateTime.ParseExact ("27122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				"Vacation"
-			);
-			Assert.IsNotNull (timeOff.GetVacationInfo (
-				DateTime.ParseExact ("27122014", "ddMMyyyy", CultureInfo.InvariantCulture)
-			));
-			/*timeOff.RemoveVacationInfo (
-				DateTime.ParseExact ("27122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				"Vacation"
-			);*/
-			foreach (IWebElement we in timeOff.GetAllTimeOff()) {
-				Console.WriteLine (we.Text);
-			}
-		}
+			StreamReader re = new StreamReader("bluesource-tests.json");
+			JsonTextReader reader = new JsonTextReader(re);
+			JsonSerializer se = new JsonSerializer();
+			object parsedData = se.Deserialize(reader);
 
-		/*[Test ()]
-		public void TestTimeOffSingleDay()
-		{
 			LoginPage page = new LoginPage (driver);
 			EmployeesPage empl = page.DoLogin ("company.admin", "anything");
 			NavigationBar nav = new NavigationBar (driver);
@@ -123,19 +103,19 @@ namespace BluesourceSharpTests
 			EmployeeDataPage data = empl.SelectFirstMatchingEmployee ();
 			ManageTimeOffPage timeOff = data.GotoManageTimeOff ();
 			timeOff = timeOff.SetVacationInfo (
-				DateTime.ParseExact ("27122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				DateTime.ParseExact ("28122014", "ddMMyyyy", CultureInfo.InvariantCulture),
+				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture),
+				DateTime.ParseExact ("30122014", "ddMMyyyy", CultureInfo.InvariantCulture),
 				"Vacation"
 			);
-			Assert.IsNotNull (timeOff.GetVacationInfo (
-				DateTime.ParseExact ("27122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				DateTime.ParseExact ("28122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				"Vacation"
-			));
-			foreach (IWebElement we in timeOff.GetAllTimeOff()) {
-				Console.WriteLine (we.Text);
-			}
-		}*/
+			IWebElement time = timeOff.GetVacationInfo (
+				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture)
+			);
+			Assert.IsNotNull (time);
+			Assert.IsTrue (time.FindElement (By.CssSelector (".business-days")).FindElement(By.XPath("strong")).Text.Equals("2"));
+			timeOff.TrashVacationInfo (
+				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture)
+			);
+		}
 	}
 }
 
