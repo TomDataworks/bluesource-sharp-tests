@@ -1,0 +1,11 @@
+﻿{
+	"timeoff": [
+		{
+			"start": "29122014",
+			"end": "30122014",
+			"days": "2",
+			"type": "Vacation",
+			"succeeds": true
+		}
+	]
+}

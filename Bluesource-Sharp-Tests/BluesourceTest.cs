@@ -6,6 +6,9 @@ using System;
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
+using CsvHelper;
+using System.Collections.Generic;
+using System.Text;
 
 namespace BluesourceSharpTests
 {
@@ -88,33 +91,42 @@ namespace BluesourceSharpTests
 			Assert.IsTrue (page.HasLoginLink ());
 		}*/
 
-		[Test ()]
-		public void TestTimeOff()
-		{
-			StreamReader re = new StreamReader("bluesource-tests.json");
-			JsonTextReader reader = new JsonTextReader(re);
-			JsonSerializer se = new JsonSerializer();
-			object parsedData = se.Deserialize(reader);
+		public IEnumerable<TestCaseData> TestTimeOffData() {
+			StreamReader re = new StreamReader("data/bluesource-timeoff-test.csv");
+			var csv = new CsvReader (re);
 
+			while (csv.Read ()) {
+				yield return new TestCaseData (
+					csv.GetField<string>("Name"),
+					csv.GetField<DateTime>("Start"),
+					csv.GetField<DateTime>("End"),
+					csv.GetField<string>("Type"),
+					csv.GetField<string>("Reason"),
+					csv.GetField<bool>("Half-Day"),
+					csv.GetField<float>("Days"),
+					csv.GetField<bool>("Succeeds")
+				);
+			}
+		}
+
+		[Test (), TestCaseSource("TestTimeOffData") ]
+		public void TestTimeOff(string name, DateTime start, DateTime end, string type, string reason, bool halfday, float days, bool succeeds)
+		{
 			LoginPage page = new LoginPage (driver);
 			EmployeesPage empl = page.DoLogin ("company.admin", "anything");
 			NavigationBar nav = new NavigationBar (driver);
 			empl.EnterInSearch ("Kazirick Revele");
 			EmployeeDataPage data = empl.SelectFirstMatchingEmployee ();
 			ManageTimeOffPage timeOff = data.GotoManageTimeOff ();
-			timeOff = timeOff.SetVacationInfo (
-				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				DateTime.ParseExact ("30122014", "ddMMyyyy", CultureInfo.InvariantCulture),
-				"Vacation"
-			);
-			IWebElement time = timeOff.GetVacationInfo (
-				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture)
-			);
-			Assert.IsNotNull (time);
-			Assert.IsTrue (time.FindElement (By.CssSelector (".business-days")).FindElement(By.XPath("strong")).Text.Equals("2"));
-			timeOff.TrashVacationInfo (
-				DateTime.ParseExact ("29122014", "ddMMyyyy", CultureInfo.InvariantCulture)
-			);
+			timeOff = timeOff.SetVacationInfo (start, end, type, reason, halfday);
+			if (succeeds) {
+				IWebElement time = timeOff.GetVacationInfo (start);
+				Assert.IsNotNull (time);
+				Assert.IsTrue (time.FindElement (By.CssSelector (".business-days")).FindElement (By.XPath ("strong")).Text.Equals (days.ToString()));
+				timeOff.TrashVacationInfo (start);
+			}
+			page = nav.DoLogout ();
+			Assert.IsTrue (page.HasLoginLink ());
 		}
 	}
 }

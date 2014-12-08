@@ -8,6 +8,7 @@
     <RootNamespace>BluesourceSharpTests</RootNamespace>
     <AssemblyName>Bluesource-Sharp-Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseMSBuildEngine>False</UseMSBuildEngine>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,8 +40,9 @@
     <Reference Include="WebDriver.Support">
       <HintPath>..\packages\Selenium.Support.2.44.0\lib\net40\WebDriver.Support.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.10.0\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +64,11 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="bluesource-tests.json" />
+    <None Include="data\bluesource-timeoff-test.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\" />
   </ItemGroup>
 </Project>
