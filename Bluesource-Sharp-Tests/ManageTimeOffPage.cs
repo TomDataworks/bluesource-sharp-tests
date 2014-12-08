@@ -37,7 +37,12 @@ namespace BluesourceSharpTests
 
 		public IWebElement GetVacationInfo( DateTime start ) {
 			string start_s = start.ToString ("yyyy-MM-dd", CultureInfo.InvariantCulture);
-			return driver.FindElement (By.XPath ("input[@value = '" + start_s + "']"));
+			return driver.FindElement (By.XPath ("//input[@value = '" + start_s + "']"));
+		}
+
+		public IWebElement TrashVacationInfo( DateTime start ) {
+			string start_s = start.ToString ("yyyy-MM-dd", CultureInfo.InvariantCulture);
+			driver.FindElement (By.XPath ("//input[@value = '" + start_s + "']/../..//button[contains(. , 'Remove')]")).Click ();
 		}
 
 		public IReadOnlyCollection<IWebElement> GetAllTimeOff() {
