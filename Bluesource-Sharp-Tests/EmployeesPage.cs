@@ -8,25 +8,6 @@ using System;
 
 namespace BluesourceSharpTests
 {
-	public struct Employee {
-		IWebElement employee_username;
-		IWebElement employee_first_name;
-		IWebElement employee_last_name;
-		IWebElement employee_title_id;
-		IWebElement employee_role;
-		IWebElement employee_manager_id;
-		IWebElement employee_status;
-		IWebElement employee_bridge_time;
-		IWebElement employee_location;
-		IWebElement employee_start_date;
-		IWebElement employee_cell_phone;
-		IWebElement employee_office_phone;
-		IWebElement employee_email;
-		IWebElement employee_im_name;
-		IWebElement employee_im_client;
-		IWebElement employee_department_id;
-	}
-
 	public class EmployeesPage : BaseWebPage
 	{
 		[FindsBy(How = How.XPath, Using = "//button[contains(., \"Add\")]")]

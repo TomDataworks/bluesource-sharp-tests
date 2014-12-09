@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.IO;
-using Newtonsoft.Json;
 using CsvHelper;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +28,7 @@ namespace BluesourceSharpTests
 			driver.Quit ();
 		}
 
-		/*[Test ()]
+		[Test ()]
 		public void TestLoginLogout()
 		{
 			LoginPage page = new LoginPage (driver);
@@ -89,7 +88,7 @@ namespace BluesourceSharpTests
 			// Assert.IsNull (titles.FindTitleByName ("Agent"));
 			page = nav.DoLogout ();
 			Assert.IsTrue (page.HasLoginLink ());
-		}*/
+		}
 
 		public IEnumerable<TestCaseData> TestTimeOffData() {
 			StreamReader re = new StreamReader("data/bluesource-timeoff-test.csv");
@@ -124,10 +123,10 @@ namespace BluesourceSharpTests
 				Assert.IsNotNull (time);
 				Assert.IsTrue (time.FindElement (By.CssSelector (".business-days")).FindElement (By.XPath ("strong")).Text.Equals (days.ToString()));
 				timeOff.TrashVacationInfo (start);
+				// Assert.IsNull (timeOff.GetVacationInfo (start));
 			}
 			page = nav.DoLogout ();
 			Assert.IsTrue (page.HasLoginLink ());
 		}
 	}
 }
-
