@@ -19,7 +19,7 @@ namespace BluesourceSharpTests
 		public bool SyncElement(By by) {
 			WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(10000));
 			wait.IgnoreExceptionTypes (typeof(NoSuchElementException));
-			IWebElement element = wait.Until (client => client.FindElement (by));
+			IWebElement element = wait.Until (WaitingConditions.ElementIsClickable(by));
 			return element.Enabled;
 		}
 	}

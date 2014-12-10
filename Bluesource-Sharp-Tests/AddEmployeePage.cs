@@ -44,8 +44,7 @@ namespace BluesourceSharpTests
 		public AddEmployeePage ( IWebDriver driver ) : base (driver) {}
 
 		public EmployeesPage AddEmployee(string name, string first, string last) {
-			WebDriverWait wait = new WebDriverWait (driver, TimeSpan.FromSeconds (10));
-			wait.Until (WaitingConditions.ElementIsClickable (By.Id ("employee_username")));
+            SyncElement (By.Id("employee_username"));
 			this.employee_username.Click ();
 			this.employee_username.SendKeys (name);
 			this.employee_first_name.SendKeys (first);
