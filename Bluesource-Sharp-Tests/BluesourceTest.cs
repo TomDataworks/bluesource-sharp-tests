@@ -16,19 +16,33 @@ namespace BluesourceSharpTests
 	{
 		private IWebDriver driver;
 
-		[TestFixtureSetUp] public void Init()
+		[TestFixtureSetUp]
+		public void Init()
 		{
 			driver = new FirefoxDriver();
 			driver.Navigate ().GoToUrl ("http://bluesourcestaging.herokuapp.com/login");
 			driver.Manage ().Timeouts ().ImplicitlyWait (TimeSpan.FromSeconds (10));
 		}
 
-		[TestFixtureTearDown] public void Cleanup()
+		[TestFixtureTearDown]
+		public void Cleanup()
 		{
 			driver.Quit ();
 		}
 
-		[Test ()]
+		[TearDown]
+		public void TearDown()
+		{
+			if (TestContext.CurrentContext.Result.Status == TestStatus.Failed)
+			{
+				NavigationBar nav = new NavigationBar (driver);
+				if (nav.HasLogoutLink ()) {
+					LoginPage page = nav.DoLogout ();
+				}
+			}
+		}
+
+		[Test]
 		public void TestLoginLogout()
 		{
 			LoginPage page = new LoginPage (driver);
@@ -39,7 +53,7 @@ namespace BluesourceSharpTests
 			Assert.IsTrue (page.HasLoginLink ());
 		}
 
-		[Test ()]
+		[Test]
 		public void TestAddEmployee()
 		{
 			LoginPage page = new LoginPage (driver);
@@ -56,7 +70,7 @@ namespace BluesourceSharpTests
 			Assert.IsTrue (page.HasLoginLink ());
 		}
 
-		[Test ()]
+		[Test]
 		public void TestAddDepartment()
 		{
 			LoginPage page = new LoginPage (driver);
@@ -73,7 +87,7 @@ namespace BluesourceSharpTests
 			Assert.IsTrue (page.HasLoginLink ());
 		}
 
-		[Test ()]
+		[Test]
 		public void TestAddTitle()
 		{
 			LoginPage page = new LoginPage (driver);
@@ -90,31 +104,13 @@ namespace BluesourceSharpTests
 			Assert.IsTrue (page.HasLoginLink ());
 		}
 
-		public IEnumerable<TestCaseData> TestTimeOffData() {
-			StreamReader re = new StreamReader("data/bluesource-timeoff-test.csv");
-			var csv = new CsvReader (re);
-
-			while (csv.Read ()) {
-				yield return new TestCaseData (
-					csv.GetField<string>("Name"),
-					csv.GetField<DateTime>("Start"),
-					csv.GetField<DateTime>("End"),
-					csv.GetField<string>("Type"),
-					csv.GetField<string>("Reason"),
-					csv.GetField<bool>("Half-Day"),
-					csv.GetField<float>("Days"),
-					csv.GetField<bool>("Succeeds")
-				);
-			}
-		}
-
-		[Test (), TestCaseSource("TestTimeOffData") ]
+		[Test, TestCaseSource(typeof(BluesourceTestData), "TestTimeOffData") ]
 		public void TestTimeOff(string name, DateTime start, DateTime end, string type, string reason, bool halfday, float days, bool succeeds)
 		{
 			LoginPage page = new LoginPage (driver);
 			EmployeesPage empl = page.DoLogin ("company.admin", "anything");
 			NavigationBar nav = new NavigationBar (driver);
-			empl.EnterInSearch ("Kazirick Revele");
+			empl.EnterInSearch (name);
 			EmployeeDataPage data = empl.SelectFirstMatchingEmployee ();
 			ManageTimeOffPage timeOff = data.GotoManageTimeOff ();
 			timeOff = timeOff.SetVacationInfo (start, end, type, reason, halfday);
@@ -125,6 +121,50 @@ namespace BluesourceSharpTests
 				timeOff.TrashVacationInfo (start);
 				// Assert.IsNull (timeOff.GetVacationInfo (start));
 			}
+			page = nav.DoLogout ();
+			Assert.IsTrue (page.HasLoginLink ());
+		}
+
+		[Test, TestCaseSource(typeof(BluesourceTestData), "TestTotalTimeOffData")]
+		public void TestTotalVacationDays(string name)
+		{
+			TimeOff.TimeOffLimits manageLimits, viewLimits, employeeDataLimits;
+			LoginPage page = new LoginPage (driver);
+			EmployeesPage empl = page.DoLogin ("company.admin", "anything");
+			NavigationBar nav = new NavigationBar (driver);
+			empl.EnterInSearch (name);
+			EmployeeDataPage data = empl.SelectFirstMatchingEmployee ();
+			ManageTimeOffPage manageTimeOff = data.GotoManageTimeOff ();
+			manageLimits = manageTimeOff.GetTimeOffLimits ();
+			data = manageTimeOff.GoBack ();
+			ViewTimeOffPage viewTimeOff = data.GotoViewTimeOff ();
+			viewLimits = viewTimeOff.GetTimeOffLimits ();
+			Assert.IsTrue (manageLimits.Equals(viewLimits));
+			data = viewTimeOff.GoBack ();
+			employeeDataLimits = data.GetTimeOffLimits ();
+			Assert.IsTrue (manageLimits.Equals (employeeDataLimits));
+			page = nav.DoLogout ();
+			Assert.IsTrue (page.HasLoginLink ());
+		}
+
+		[Test, TestCaseSource(typeof(BluesourceTestData), "TestUsedTimeOffData")]
+		public void TestUsedVacationDays(string name)
+		{
+			TimeOff.TimeOffUsed manageUsed, viewUsed, employeeDataUsed;
+			LoginPage page = new LoginPage (driver);
+			EmployeesPage empl = page.DoLogin ("company.admin", "anything");
+			NavigationBar nav = new NavigationBar (driver);
+			empl.EnterInSearch (name);
+			EmployeeDataPage data = empl.SelectFirstMatchingEmployee ();
+			ManageTimeOffPage manageTimeOff = data.GotoManageTimeOff ();
+			manageUsed = manageTimeOff.GetTimeOffUsed ();
+			data = manageTimeOff.GoBack ();
+			ViewTimeOffPage viewTimeOff = data.GotoViewTimeOff ();
+			viewUsed = viewTimeOff.GetTimeOffUsed ();
+			Assert.IsTrue (manageUsed.Equals(viewUsed));
+			data = viewTimeOff.GoBack ();
+			employeeDataUsed = data.GetTimeOffUsed ();
+			Assert.IsTrue (manageUsed.Equals (employeeDataUsed));
 			page = nav.DoLogout ();
 			Assert.IsTrue (page.HasLoginLink ());
 		}

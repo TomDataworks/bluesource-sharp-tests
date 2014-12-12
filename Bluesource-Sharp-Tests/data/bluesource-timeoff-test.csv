@@ -1,8 +1,8 @@
-Name,Start,End,Type,Reason,Half-Day,Days,Succeeds,Comment
-Kazirick Revele,12/29/2014,12/30/2014,Vacation,,FALSE,2,TRUE,Basic test of adding some vacation days
-Kazirick Revele,12/29/2014,12/27/2014,Sick,,FALSE,-1,FALSE,End date is before the start date
-Kazirick Revele,12/27/2014,12/29/2014,Vacation,,FALSE,1,TRUE,Vacation is over the weekend
-Kazirick Revele,12/30/2014,12/30/2014,Other,,FALSE,1,FALSE,Other vacation with no reason specified
-Kazirick Revele,12/30/2014,12/30/2014,Other,Death in family,FALSE,1,TRUE,Other vacation with a reason specified
-Kazirick Revele,12/30/2014,12/30/2014,Sick,,TRUE,0.5,TRUE,Half day with a same day value
-Kazirick Revele,12/30/2014,12/31/2014,Sick,,TRUE,1.5,TRUE,Half day with a next day value
+Test,Name,Start,End,Type,Reason,Half-Day,Days,Succeeds,Description
+FR501-1,Kazirick Revele,12/29/2014,12/30/2014,Vacation,,FALSE,2,TRUE,Basic test of adding some vacation days
+FR502-1,Kazirick Revele,12/29/2014,12/27/2014,Sick,,FALSE,-1,FALSE,End date is before the start date
+FR503-1,Kazirick Revele,12/27/2014,12/29/2014,Vacation,,FALSE,1,TRUE,Vacation is over the weekend
+FR504-1,Kazirick Revele,12/30/2014,12/30/2014,Other,,FALSE,1,FALSE,Other vacation with no reason specified
+FR505-1,Kazirick Revele,12/30/2014,12/30/2014,Other,Death in family,FALSE,1,TRUE,Other vacation with a reason specified
+FR506-1,Kazirick Revele,12/30/2014,12/30/2014,Sick,,TRUE,0.5,TRUE,Half day with a same day value
+FR507-1,Kazirick Revele,12/30/2014,12/31/2014,Sick,,TRUE,1.5,TRUE,Half day with a next day value
