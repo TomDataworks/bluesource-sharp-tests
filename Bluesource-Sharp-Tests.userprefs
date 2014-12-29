@@ -1,22 +1,25 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Bluesource-Sharp-Tests\BluesourceTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Bluesource-Sharp-Tests\ViewTimeOffPage.cs">
     <Files>
-      <File FileName="Bluesource-Sharp-Tests\LoginPage.cs" Line="22" Column="22" />
-      <File FileName="Bluesource-Sharp-Tests\NavigationBar.cs" Line="1" Column="1" />
-      <File FileName="Bluesource-Sharp-Tests\AddEmployeePage.cs" Line="46" Column="46" />
-      <File FileName="Bluesource-Sharp-Tests\BaseWebPage.cs" Line="48" Column="48" />
-      <File FileName="Bluesource-Sharp-Tests\WaitingConditions.cs" Line="1" Column="1" />
+      <File FileName="Bluesource-Sharp-Tests\LoginPage.cs" Line="4" Column="4" />
+      <File FileName="Bluesource-Sharp-Tests\NavigationBar.cs" Line="34" Column="34" />
+      <File FileName="Bluesource-Sharp-Tests\AddEmployeePage.cs" Line="25" Column="25" />
+      <File FileName="Bluesource-Sharp-Tests\BaseWebPage.cs" Line="27" Column="27" />
+      <File FileName="Bluesource-Sharp-Tests\WaitingConditions.cs" Line="3" Column="3" />
       <File FileName="Bluesource-Sharp-Tests\packages.config" Line="1" Column="1" />
-      <File FileName="Bluesource-Sharp-Tests\DepartmentsPage.cs" Line="2" Column="2" />
-      <File FileName="Bluesource-Sharp-Tests\TitlesPage.cs" Line="36" Column="36" />
-      <File FileName="Bluesource-Sharp-Tests\EmployeesPage.cs" Line="1" Column="1" />
-      <File FileName="Bluesource-Sharp-Tests\AddDepartmentPage.cs" Line="1" Column="1" />
+      <File FileName="Bluesource-Sharp-Tests\DepartmentsPage.cs" Line="1" Column="1" />
+      <File FileName="Bluesource-Sharp-Tests\TitlesPage.cs" Line="39" Column="39" />
+      <File FileName="Bluesource-Sharp-Tests\EmployeesPage.cs" Line="3" Column="3" />
+      <File FileName="Bluesource-Sharp-Tests\AddDepartmentPage.cs" Line="5" Column="5" />
       <File FileName="Bluesource-Sharp-Tests\AddTitlePage.cs" Line="1" Column="1" />
-      <File FileName="Bluesource-Sharp-Tests\EmployeeDataPage.cs" Line="35" Column="35" />
-      <File FileName="Bluesource-Sharp-Tests\ManageTimeOffPage.cs" Line="68" Column="68" />
-      <File FileName="Bluesource-Sharp-Tests\ViewTimeOffPage.cs" Line="2" Column="2" />
-      <File FileName="Bluesource-Sharp-Tests\BluesourceTest.cs" Line="44" Column="44" />
+      <File FileName="Bluesource-Sharp-Tests\EmployeeDataPage.cs" Line="38" Column="38" />
+      <File FileName="Bluesource-Sharp-Tests\ManageTimeOffPage.cs" Line="38" Column="38" />
+      <File FileName="Bluesource-Sharp-Tests\ViewTimeOffPage.cs" Line="37" Column="37" />
+      <File FileName="Bluesource-Sharp-Tests\BluesourceTest.cs" Line="72" Column="72" />
+      <File FileName="Bluesource-Sharp-Tests\TimeOff.cs" Line="18" Column="18" />
+      <File FileName="Bluesource-Sharp-Tests\BluesourceTestData.cs" Line="37" Column="37" />
+      <File FileName="Bluesource-Sharp-Tests\TestRunner.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
